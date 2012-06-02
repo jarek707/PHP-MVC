@@ -1,0 +1,10 @@
+<Files .htaccess>
+	Order deny,allow
+	Deny from all
+</Files>
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !^.*/public/
+RewriteRule !\.(pdf|doc|JPG|js|css|ico|gif|jpg|png|json|swf|xap|xml|htm|jar|txt)$ index.php [L]
+RewriteCond %{REQUEST_URI} !^.*/public/
+RewriteRule (.*)\.(.*)$ public/$1\.$2 [L]
