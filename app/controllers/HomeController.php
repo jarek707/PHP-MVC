@@ -3,11 +3,12 @@
 
 	class HomeController extends Controller {
 		public function __construct() {
+			echo $this->setHeader(array('app.less', 'home') );
 		}
 
 		public function index() {
 			echo $this->render('index');
-			echo self::$tpl->render('home/index.tpl');
+			echo $this->setFooter();
 		}
 
 		public function create() {

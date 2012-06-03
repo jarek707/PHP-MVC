@@ -39,5 +39,31 @@
 								: "Missing template $tplName";
 			}	
 		}
+
+		public function setTplVar( $var, $val ) { self::$tpl->$var=$val; }
+
+		public function setIncludes( $cssA = array(), $jsA = array() ) {
+			$cssA = ( $cssA ) ? $cssA : array('app.less');
+			$jsA  = ( $jsA  ) ? $jsA  : array('jquery', 'app.c');
+			
+			self::$tpl->rootUrl = Init::$rootUrl;
+
+			$outS = '';
+			foreach ( array( 'css' => $cssA, 'js' => $jsA ) as $typ => $fileList ) 
+				foreach ( $fileList as $file ) {
+					$this->setTplVar('file', $file);
+					$outS .= $this->render("page/${typ}.tpl");
+				}
+			return $outS;
+		}
+
+		public function setHeader( $cssA = array(), $jsA = array() ) {
+			$this->setTplVar('headContent', $this->setIncludes( $cssA, $jsA ));
+			return $this->render('page/head.tpl');
+		}
+
+		public function setFooter() {
+			return $this->render('page/foot.tpl');
+		}
 	}
 ?>
