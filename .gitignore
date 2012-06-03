@@ -1,2 +1,5 @@
+.DS_Store
 *.swp
 log/*.log
+public/css/*.less.css
+public/js/*.c.js
