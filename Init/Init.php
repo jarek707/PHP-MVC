@@ -1,19 +1,17 @@
 <?php
 class Init {
 	//Application Paths
+	static $weAreInDevelopment = true; // This will be set to false if we are in Staging or Production
+
 	static $config	 = array();
-	static $rootUrl	= '';
-	static $rootDoc	= '';
-	static $rootLog	= '';
-	static $rootApp	= '';
-	static $urlJs		= '';
-	static $urlCss	 = '';
-	static $rootMod	= '';
+	static $rootUrl	 = '';
+	static $rootDoc	 = '';
+	static $rootApp	 = '';
+	static $rootMod	 = '';
 	static $rootView = '';
 	static $rootCtrl = '';
-	static $rootRes	= '';
+	static $rootPub  = '';
 	static $rootPhpLib	= '';
-	static $configRes	 = '';
 
 	static $fp				 = null;
 	static $db				 =	 -1;
@@ -26,6 +24,8 @@ class Init {
 			self::$rootUrl = 'http://' . $_SERVER['HTTP_HOST'] . '/';
 
 			$profile = ( isset($_SERVER['SERVER_ENV']) ) ? $_SERVER['SERVER_ENV'] : 'local';
+			self::$weAreInDevelopment = !(( $profile === 'production' ) || ( $profile === 'staging' ));
+			//self::$weAreInDevelopment = false;
 
 			$configA = parse_ini_file( self::$rootDoc . 'config/app.ini', true );
 			self::$config = $configA[$profile];
@@ -33,7 +33,7 @@ class Init {
 			$this->init($configA['paths']);
 
 			require_once(self::$rootPhpLib . 'View.php');
-			$this->build_assets();
+			if ( self::$weAreInDevelopment ) $this->build_assets();
 		}
 	}
 
@@ -50,10 +50,10 @@ class Init {
 		self::$db = new Db();
 	}
 
-	// This builds .css out of .less files
+	// This builds .css out of .less files and .js out of .coffee files in app/assets
 	public function build_assets() {
-		require_once(self::$rootPhpLib . 'lessc.inc.php');
 
+		require_once(self::$rootPhpLib . 'lessc.inc.php');
 		$dirA = scandir( $assetsDir = self::$rootApp . 'assets/css/' );
 		foreach ( $dirA as $file_name ) {
 			if ( substr($file_name,-5) == '.less') {
@@ -62,10 +62,17 @@ class Init {
 		}
 
 		require_once(self::$rootDoc . 'lib/php/CoffeeScript/src/CoffeeScript/Init.php');
+		$dirA = scandir( $assetsDir = self::$rootApp . 'assets/js/' );
 		CoffeeScript\Init::load();
-		$coffee = file_get_contents(self::$rootApp . 'assets/js/app.coffee');
-		$js = CoffeeScript\Compiler::compile($coffee);
-		file_put_contents( Init::$rootDoc . 'public/js/app.c.js', $js );
+		foreach ( $dirA as $file_name ) {
+			if ( substr($file_name,-7) == '.coffee') {
+				file_put_contents( Init::$rootDoc . "public/js/${file_name}.js", 
+					CoffeeScript\Compiler::compile(
+						file_get_contents(self::$rootApp . 'assets/js/' . $file_name )
+					)
+				);
+			}
+		}
 	}
 
 	// Factory
@@ -87,7 +94,7 @@ class Init {
 	}
 
 	public static function log( $msg, $head = 'LOG' ) {
-		self::$fp == null ? self::$fp = fopen(Init::$rootLog . 'mvc.log', 'a+') : null;
+		self::$fp == null ? self::$fp = fopen(Init::$rootDoc . 'log/mvc.log', 'a+') : null;
 		ob_start();
 			var_dump( $msg );
 			fwrite( self::$fp, $head . ':' . ob_get_contents() );

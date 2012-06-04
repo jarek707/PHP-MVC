@@ -2,4 +2,4 @@
 *.swp
 log/*.log
 public/css/*.less.css
-public/js/*.c.js
+public/js/*.coffee.js

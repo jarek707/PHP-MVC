@@ -23,13 +23,19 @@ class RouterController {
 		self::$action = ucfirst( $action );
 
 		self::$method = lcfirst( array_shift($methodA) );
-		if ( self::$method == '' ) self::$method = 'index';
-		if ( self::$action == '' ) self::$action = 'home';
+		if ( self::$method == '' ) self::$method  = 'index';
+		if ( self::$action == '' ) self::$action  = 'home';
 		foreach ( $methodA as $m ) self::$method .= ucfirst( strtolower($m) );
 
 	  //$start = microtime( true );
 		try                    { Init::newController( self::$action )->{self::$method}(); }
-		catch ( Exception $e ) { echo $e->getMessage(); }
+		catch ( Exception $e ) { 
+			if ( Init::$weAreInDevelopment ) {
+				echo $e->getMessage(); 
+			} else {
+				header('Location:' . Init::$rootUrl);
+			}
+		}
 		//LG ( microtime(true) - $start );
 	}
 }

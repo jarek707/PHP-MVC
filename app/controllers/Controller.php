@@ -8,23 +8,36 @@
 
 		public function __construct() {
 			if ( !self::$tpl ) self::$tpl = new View();
+			self::$tpl->rootUrl = Init::$rootUrl;
 
-			self::$action  = $action  = RouterController::$action;
-			self::$method  = $method  = RouterController::$method;
-			self::$viewDir = $viewDir = Init::$rootView . 'tpl/' . lcfirst($action) . '/' ;
-
+			self::$method  = $method = RouterController::$method;
+			self::$action  = lcfirst(  RouterController::$action);
+			self::$viewDir = $viewDir = Init::$rootView . 'tpl/' . self::$action . '/' ;
+			
+			$errS = '';
 			if ( !file_exists( $viewDir ) ) {
-				echo "<br />Add template directory for this controller at <b>$viewDir</b>";
+				$errS .= "<br />Add template directory for this controller at <b>$viewDir</b>";
 			} 
 			if ( !file_exists( "${viewDir}${method}.tpl" ) ) {
-				echo "<br />Add template for method <b>${method}</b> in <b>${viewDir}${method}.tpl</b>";
+				$errS .= "<br />Add template: <br /><b><i>&nbsp;&nbsp;${viewDir}${method}.tpl</i></b><br /> for method <b>${method}</b><br />";
+			}
+
+			if ( Init::$weAreInDevelopment ) {
+				echo $errS;
+			} else {
+				if ( $errS )
+					echo 'Page <b><i>' . Init::$rootUrl . self::$action . '/' . self::$method . '</i></b> does not exist';
 			}
 		}
 
 		public function __call($action, $method) {
-			echo "<br />Add method <b>public function " . RouterController::$method 
-				. "()</b> to file <b>" . Init::$rootCtrl .  RouterController::$action 
-				. 'Controller.php</b>';
+			if ( Init::$weAreInDevelopment ) {
+				echo "<br />Add method:<i><b><br />&nbsp; public function " . self::$method 
+					. "() {}</i></b><br /> to file <b>" . Init::$rootCtrl .  ucfirst(self::$action) 
+					. 'Controller.php</b>';
+			} else {
+				//header('Location:' . Init::$rootUrl);
+			}
 		}
 
 		// Template name is either full path inside rootView or just a file name without .tpl
@@ -42,11 +55,7 @@
 
 		public function setTplVar( $var, $val ) { self::$tpl->$var=$val; }
 
-		public function setIncludes( $cssA = array(), $jsA = array() ) {
-			$cssA = ( $cssA ) ? $cssA : array('app.less');
-			$jsA  = ( $jsA  ) ? $jsA  : array('jquery', 'app.c');
-			
-			self::$tpl->rootUrl = Init::$rootUrl;
+		public function setIncludes( $cssA = array('app.less'), $jsA = array('jquery','app.c') ) {
 
 			$outS = '';
 			foreach ( array( 'css' => $cssA, 'js' => $jsA ) as $typ => $fileList ) 

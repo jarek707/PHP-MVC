@@ -3,12 +3,11 @@
 
 	class HomeController extends Controller {
 		public function __construct() {
-			echo $this->setHeader(array('app.less', 'home') );
+			echo $this->setHeader( array('app.less', 'home') );
 		}
 
 		public function index() {
-			echo $this->render('index');
-			echo $this->setFooter();
+			echo  $this->render('index') . $this->setFooter();
 		}
 
 		public function create() {
