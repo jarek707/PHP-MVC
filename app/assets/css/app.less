@@ -1,3 +1,57 @@
+@headerHeight:55px;
+
+.tight {
+	margin:0;
+	padding:0;
+	border:none;
+}
+
+.div {
+	.tight;
+	position:relative;
+	float:left;
+}
+
+.rounded(@radius: 5px) {
+	border-radius: @radius;
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+}
+
 body {
-	background:#aaa;
+	background:#eee;
+	padding:0;
+	margin:0;
+}
+
+#header {
+	.div;
+	width:100%;
+	height:@headerHeight;
+	border-bottom:1px solid #aaa;
+	img {
+		width:@headerHeight;
+		height:@headerHeight;
+		position:relative;
+		float:left;
+		.rounded(10px);
+	}
+	#menu {
+		ul {
+			li {
+				list-style:none;
+				a {
+					color:blue;
+					text-decoration:none;
+				}
+			}
+		}
+	}
+}
+
+#content {
+	
+}
+
+#footer {
 }

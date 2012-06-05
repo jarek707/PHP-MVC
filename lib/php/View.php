@@ -59,7 +59,7 @@ class View
 		try {
 			return $this->_run( $fileName );
 		} catch (Exception $e) {
-			LG( $e->getMessage() );
+			LG( $e->getMessage(), 'View Render:' );
 			return '';
 		}
 	}
@@ -188,7 +188,7 @@ class View
 				try { 
 							$retStr = $this->render($fileName);
 							$this->assign($save);
-				} catch( Exception $e) { LG( $e->getMessage()) ; }
+				} catch( Exception $e) { LG( $e->getMessage(), 'View Render With:') ; }
 
 				return $retStr;
 		}
@@ -301,7 +301,7 @@ class View
 	protected function _run()
 	{
 		$htmlS = '';
-		if ( !($guts = $this->getTplFile( func_get_arg(0) )) ) return;
+		if ( !($guts = $this->getTplFile( $tplFile = func_get_arg(0) )) ) return;
 
 		$ifCount = 0;
 
@@ -319,6 +319,8 @@ class View
 			@list($paramStr, $guts) = explode('%%]', ltrim($guts), 2);
 
 			@list($first, $paramStr) = preg_split('/\s+/m', ltrim($paramStr), 2);
+			LG( $first, ' first ' );
+			LG( $gust , ' guts' );
 
 			if ($ifCount > 0) {
 					switch ($first) {
@@ -371,6 +373,8 @@ class View
 					$htmlS .= $this->renderWith($subTplFilename, $vars);
 					break;
 
+				case 'LOOP':
+					break;
 				// ITERATE
 				case 'ITERATE':
 					@list($propName, $subTplFilename, $rest) = preg_split('/\s+/m', $paramStr, 3);

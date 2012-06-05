@@ -3,3 +3,4 @@
 <head>
 [%% headContent %%]</head>
 <body>
+[%% RENDER page/header.tpl %%]

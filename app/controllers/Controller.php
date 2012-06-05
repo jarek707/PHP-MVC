@@ -55,7 +55,7 @@
 
 		public function setTplVar( $var, $val ) { self::$tpl->$var=$val; }
 
-		public function setIncludes( $cssA = array('app.less'), $jsA = array('jquery','app.c') ) {
+		public function setIncludes( $cssA = array('app.less'), $jsA = array('jquery','app.coffee') ) {
 
 			$outS = '';
 			foreach ( array( 'css' => $cssA, 'js' => $jsA ) as $typ => $fileList ) 
