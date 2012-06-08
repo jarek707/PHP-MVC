@@ -55,6 +55,21 @@ class Db {
 		  LG( mysql_error() . ' SQL:' . $sql , 'DB' );
 		}
 	}
+
+	public function insertFrom( $argA ) {
+		$tab = $argA['tab'];
+		unset($argA['tab']);
+		unset($argA['undefined']);
+		$cols = $vals = '';
+		foreach ( $argA as $col => $val ) {
+			$cols .= $col . ',';	
+			$vals .= "'$val'" . ',';
+		}
+		$cols = rtrim( $cols,',');
+		$vals = rtrim( $vals,',');
+		$this->query(	$sql =  "INSERT INTO $tab ($cols) Values ($vals)");
+		return $this->first("SELECT MAX(id) FROM $tab");
+	}
 }
 
 class DAO extends Db {

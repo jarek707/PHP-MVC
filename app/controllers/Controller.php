@@ -42,6 +42,7 @@
 
 		// Template name is either full path inside rootView or just a file name without .tpl
 		protected function render( $tplName ) {
+			LG ( $tplName , ' tpl name ' );
 			if ( ( strpos($tplName, '/') === false ) && (strpos($tplName, '.') === false ) ) {
 				return 	( file_exists(self::$viewDir . $tplName . '.tpl') )
 								? self::$tpl->render(self::$action . '/' . $tplName . '.tpl')
@@ -66,7 +67,7 @@
 			return $outS;
 		}
 
-		public function setHeader( $cssA = array(), $jsA = array() ) {
+		public function setHeader( $cssA = array(), $jsA = array('jquery','app.coffee') ) {
 			$this->setTplVar('headContent', $this->setIncludes( $cssA, $jsA ));
 			return $this->render('page/head.tpl');
 		}

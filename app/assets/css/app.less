@@ -1,4 +1,5 @@
-@headerHeight:55px;
+@headerHeight:100px;
+@niceBlue:#48d;
 
 .tight {
 	margin:0;
@@ -19,9 +20,11 @@
 }
 
 body {
-	background:#eee;
+	background:#fff;
 	padding:0;
 	margin:0;
+	font-family:Arial;
+	min-width:676px;
 }
 
 #header {
@@ -30,24 +33,114 @@ body {
 	height:@headerHeight;
 	border-bottom:1px solid #aaa;
 	img {
-		width:@headerHeight;
+		width:@headerHeight * 1.1;
 		height:@headerHeight;
 		position:relative;
 		float:left;
 		.rounded(10px);
 	}
+	img.right {
+		float:right;
+	}
 	#menu {
+		.tight;
+		margin:77px 0 0 120px;
 		ul {
 			li {
 				list-style:none;
+				float:left;
+				margin-right: 5px;
 				a {
-					color:blue;
+					color:@niceBlue;
+					border:1px solid #aaa;
+					-webkit-border-radius:4px 4px 0 0;
 					text-decoration:none;
+					padding:6px 9px;
 				}
 			}
 		}
 	}
 }
+
+.editWrap {
+	.div;
+	margin:20px 0 0 20px;
+	div {
+		.div;
+		.tight;
+		clear:both;
+	}
+	h2 {
+		margin-top:20px;
+		.div;
+		width:100%;
+		color: @niceBlue;
+	}
+}
+
+.itemsWrap {
+	.rounded;	
+	.div;
+	border:1px solid #ddd;
+	margin-bottom:4px;
+	ul {
+		.div;
+		clear:both;
+		width:100%;
+		display:block;
+		margin-top:8px;
+		li.del {
+			width:20px;
+		}
+		li {
+			.div;
+			margin-left:8px;
+			width:140px;
+			list-style:none;
+			text-align:right;
+			font-size:0.9em;
+			a {
+				color:transparent;
+				background: url('../../public/images/delete-icon16.png') no-repeat;
+				cursor:pointer;
+				margin-left:10px;
+			}
+		}
+	}
+	form {
+		.div;
+		.tight;
+		width:100%;
+	}
+
+	.head li {
+		font-weight:bold;
+		margin-bottom:12px;
+	}
+}
+
+.formWrap {
+	.tight;
+	.div;
+	width:100%;
+	clear:both;
+	margin-bottom:20px !important;
+	input {
+		width:140px;
+		border:1px solid #ccc;
+		.rounded(3px);
+		font-size:0.9em;
+		padding:3px;
+	}
+	input.save {
+			background: url('../../public/images/plus-icon16.png') no-repeat 0px 3px;
+			border:none;
+			color:transparent;
+			margin:3px 0 0 7px;
+			width:16px;
+	}
+}
+
 
 #content {
 	
@@ -55,3 +148,76 @@ body {
 
 #footer {
 }
+
+div.boatList {
+	.div;
+	padding:20px 0 0 20px;
+	width:800px;
+}	
+
+div.boatLine {
+	.div;
+}
+
+div.boat.unassigned, div.boatLine div.boat {
+	.rounded;
+	.div;
+	margin:3px;
+	color:@niceBlue;
+	border:1px solid #ddd;
+	font-size:1em;
+	width:120px;
+	padding:6px 8px 2px 0px;
+	div {
+		.tight;
+		.div;
+	}
+	div.name {
+		cursor:pointer;
+		padding-left:42px;
+		margin-bottom:6px;
+		border-bottom:1px solid #ddd;
+		width:86px;
+		font-size:0.9em;
+		padding-bottom:14px;
+	}
+	ul {
+		padding:4px 0px 0 28px;
+		margin:2px 0;
+		color:#555;
+		height:16px;
+		overflow:hidden;
+		li {
+			width:130px;
+			.tight;
+			.div;
+			list-style:none;	
+			font-style:italic;
+			font-size:0.7em;
+			cursor:pointer;
+		}
+	}
+	ul.hasIt {
+		background: url('../../public/images/ski-icon.png') no-repeat 8px 3px;
+	}
+}
+
+div.assigned {
+	background: url('../../public/images/boat32.png') no-repeat 4px 0px;
+}
+
+div.assigned.selected {
+	background-color:#eee;
+}
+
+div.assigned.full {
+	background-color:#ccc;
+}
+
+div.boat.unassigned {
+	position:absolute;		
+	background:white;
+	display:none;
+	border-top:none;
+}
+

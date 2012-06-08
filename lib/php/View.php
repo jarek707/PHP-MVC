@@ -319,8 +319,6 @@ class View
 			@list($paramStr, $guts) = explode('%%]', ltrim($guts), 2);
 
 			@list($first, $paramStr) = preg_split('/\s+/m', ltrim($paramStr), 2);
-			LG( $first, ' first ' );
-			LG( $gust , ' guts' );
 
 			if ($ifCount > 0) {
 					switch ($first) {
