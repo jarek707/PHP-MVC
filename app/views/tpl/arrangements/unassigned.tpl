@@ -1,4 +1,4 @@
 <div class='boat unassigned'>
-	<div>unassigned students</div>
+	<div>&nbsp; Not Assigned</div>
 	[%% unassigned %%]
 </div>

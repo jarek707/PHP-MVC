@@ -27,6 +27,20 @@ body {
 	min-width:676px;
 }
 
+body div#notify {
+	position:fixed;
+	display:none;
+	height:30px;
+	width:436px;
+	left:120px;
+	color:green;
+	font-size:0.9em;
+	background-color:#fff;
+	border:1px solid #ddd;
+	padding:10px 0 0 12px;
+	.rounded( 0px 0 10px 10px );
+}
+
 #header {
 	.div;
 	width:100%;
@@ -81,8 +95,13 @@ body {
 .itemsWrap {
 	.rounded;	
 	.div;
-	border:1px solid #ddd;
-	margin-bottom:4px;
+	border:1px solid #ddd !important;
+	width:530px;
+	margin-bottom:6px !important;
+	padding-bottom:4px !important;
+	overflow-Y:scroll;
+	overflow-X:hidden;
+	height:230px !important;
 	ul {
 		.div;
 		clear:both;
@@ -152,7 +171,20 @@ body {
 div.boatList {
 	.div;
 	padding:20px 0 0 20px;
-	width:800px;
+	width:730px;
+	div.toggle {
+		.div;
+		clear:left;
+		width:32px;
+		height:40px;
+		opacity:0.5;
+	}
+	div.toggle.show {
+		background: url('../../public/images/arrow_up24.png') no-repeat 0px 12px;
+	}
+	div.toggle.hide {
+		background: url('../../public/images/arrow_down24.png') no-repeat 0px 12px;
+	}
 }	
 
 div.boatLine {
@@ -164,7 +196,7 @@ div.boat.unassigned, div.boatLine div.boat {
 	.div;
 	margin:3px;
 	color:@niceBlue;
-	border:1px solid #ddd;
+	border:2px solid #eee;
 	font-size:1em;
 	width:120px;
 	padding:6px 8px 2px 0px;
@@ -174,12 +206,12 @@ div.boat.unassigned, div.boatLine div.boat {
 	}
 	div.name {
 		cursor:pointer;
-		padding-left:42px;
-		margin-bottom:6px;
+		margin-left:42px;
+		margin-bottom:12px;
 		border-bottom:1px solid #ddd;
 		width:86px;
 		font-size:0.9em;
-		padding-bottom:14px;
+		padding-bottom:1px;
 	}
 	ul {
 		padding:4px 0px 0 28px;
@@ -206,12 +238,12 @@ div.assigned {
 	background: url('../../public/images/boat32.png') no-repeat 4px 0px;
 }
 
-div.assigned.selected {
-	background-color:#eee;
+div.boatLine div.assigned.selected {
+	border:2px solid #d99
 }
 
 div.assigned.full {
-	background-color:#ccc;
+	background-color:#cde;
 }
 
 div.boat.unassigned {
@@ -221,3 +253,34 @@ div.boat.unassigned {
 	border-top:none;
 }
 
+li#inline_edit {
+	width:102px;
+	input {
+		.rounded(2px);
+		width:45px;
+		border:none;
+		padding:0px;
+	}
+}
+
+#instructions {
+	background: url('../../public/images/info.png') no-repeat 0px 0px;
+	width:24px;
+	height:24px;
+	margin-top:-4px;
+	display:none;
+}
+#instructions_content {
+	display:none;
+	position:absolute;
+	border:1px solid #eee;
+	padding:20px;
+	top:124px;
+	left:100px;
+	background:#eee;
+	z-index:1000;
+	.rounded(10px);
+	color:#333;
+	font-style:italic;
+	max-width:550px;
+}

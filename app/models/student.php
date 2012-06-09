@@ -6,8 +6,7 @@
 		
 		public function __construct() {
 			$list = Init::$db->all($sql = "
-				SELECT b.id boat_id, s.id student_id, 
-						CONCAT(s.first_name,' ', s.last_name) student_name, s.has_skipair
+				SELECT b.id boat_id, s.id student_id, s.first_name, s.last_name, s.has_skipair
 					FROM boat b 
 					JOIN boat_has_student bs ON (b.id=bs.id_boat)
 					JOIN student s ON (s.id=bs.id_student)
