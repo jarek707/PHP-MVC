@@ -1,0 +1,4 @@
+In mysql:
+  Create db user: 'mvc' with password 'mvc'
+
+  Run /migration script(s) to populate db with test values

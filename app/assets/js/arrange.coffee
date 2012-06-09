@@ -33,7 +33,7 @@ Arrange =
 			left	 = elm.offset().left
 			top    = elm.offset().top
 			height = elm.height()
-			$('.boat.unassigned').css({top:top+height+4, left:left - 3}).fadeIn 'slow'
+			$('.boat.unassigned').css({top:top + height + 4, left:left - 3}).fadeIn 'slow'
 
 	open_student_list: ( e ) ->
 		Arrange.check_full()
@@ -63,7 +63,8 @@ Arrange =
 		ulWrap.find('li').show()
 		ulWrap.find('li first').html $('#inline_edit input#first').val()
 		ulWrap.find('li last').html $('#inline_edit input#last').val()
-		Ajax.post 'service/update_student',{ id_student: ulWrap.attr('id_student'), first:$('#inline_edit input#first').val(), last:$('#inline_edit input#last').val() }
+		Ajax.post 'service/update_student',
+			{ id_student: ulWrap.attr('id_student'), first:$('#inline_edit input#first').val(), last:$('#inline_edit input#last').val() }
 
 		$('#inline_edit').hide()
 
