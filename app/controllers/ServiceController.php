@@ -29,17 +29,21 @@
 
 		public function reassign() {
 			LG ( $_POST ,' reassigining');
+			$now = microtime(true);
 			extract ( $_POST );
 			if ( isset($last_boat) && $last_boat != 'undefined' ) {
 				Init::$db->query("UPDATE boat_has_student SET id_boat=$id_boat WHERE id_student=$id_student");
 			} else {
 				Init::$db->query("INSERT INTO boat_has_student (id_boat,id_student) VALUES ($id_boat, $id_student)");
 			}
+			LG( 1000*(microtime(true) - $now ), 'now ');
 		}
 
 		public function updateStudent() {
 			extract ( $_POST );
-			LG( $_POST ,' update stuent');
+			$has_skipair = ( $has_skipair === 'true' ) ? 1 : 0;
+			$sql = "UPDATE student SET last_name ='$last_name', first_name='$first_name', has_skipair=$has_skipair WHERE id=$id_student";
+			Init::$db->query( $sql );
 		}
 	}
 ?>

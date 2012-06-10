@@ -20,7 +20,7 @@
 	 	
 	 	public function getUnassigned() {
 			$list = Init::$db->all($sql = "
-				SELECT s.id, CONCAT(s.first_name,' ', s.last_name) student_name, s.has_skipair
+				SELECT s.id, s.first_name, s.last_name, s.has_skipair
 				FROM student s 
 				LEFT JOIN boat_has_student bs ON ( bs.id_student=s.id ) 
 				WHERE bs.id_boat is NULL

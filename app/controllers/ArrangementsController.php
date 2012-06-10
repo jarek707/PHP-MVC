@@ -20,7 +20,6 @@
 				self::$tpl->id = $boat['id'];
 				self::$tpl->boatStudents = '';
 				$boat_students = self::$studentM->getBoatStudents($boat['id']);
-				LG( $boat_students );
 				if ( $boat_students ) {
 					foreach ( $boat_students as $id => $student ) {
 						self::$tpl->extract($student);
