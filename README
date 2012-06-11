@@ -1,4 +1,6 @@
 In mysql:
+
+  Create database 'aruba'
   Create db user: 'mvc' with password 'mvc'
 
   Run /migration script(s) to populate db with test values
