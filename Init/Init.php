@@ -28,6 +28,7 @@ class Init {
 			//self::$weAreInDevelopment = false;
 
 			$configA = parse_ini_file( self::$rootDoc . 'config/app.ini', true );
+			LG ( $configA , ' config' );
 			self::$config = $configA[$profile];
 		
 			$this->init($configA['paths']);

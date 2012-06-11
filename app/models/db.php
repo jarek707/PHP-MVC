@@ -3,6 +3,7 @@ class Db {
   static $link = null;
 
 	public function __construct() {
+		LG ( Init::$config );
 	  if ( self::$link == null ) {
 		  extract( Init::$config );
 		  self::$link = mysql_connect($dbhost, $dbuserName, $dbpassword);
