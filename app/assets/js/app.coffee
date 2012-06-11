@@ -1,14 +1,16 @@
+window.LG = ( arg ) -> console.log arg
+
 Boat = 
 	init: ->
-		$('.itemsWrap ul li.del').bind 'click', Boat.del
-		$('form .save').bind 'click', Boat.save
+		$('.itemsWrap ul li.del').bind 'click', __.del
+		$('form .save'          ).bind 'click', __.save
 
 	# Deletions
 	del: -> 
 		ulElm = $(arguments[0].target).parent().parent()
 		Ajax.post 'service/del', 
 							{id: ulElm.attr('itemId'), tab: ulElm.attr('itemType')},
-							Boat.deleted
+							__.deleted
 
 	deleted: ( data, status ) ->
 		eval 'status=' + status
@@ -22,7 +24,7 @@ Boat =
 		$.each ulElm.find( ':input' ) , -> data[$(this).attr 'name'] = $(this).val()
 		Ajax.post 'service/add',
 							data, 
-							Boat.saved
+							__.saved
 		return false
 
 	saved: (data, status) ->
@@ -35,25 +37,23 @@ Boat =
 		$.each data, (item) -> liS += '<li>' + data[item] + '</li>'
 		$('.itemsWrap.' + status.tab + ' .head').after '<ul itemId="' + status.newId + '" itemType="' + status.tab + '">' + liS + '<li class="del"><a>Delete</a></li></ul>'
 		$('form input[type$="text"]').val ''
-		$('.itemsWrap.' + status.tab + ' ul li a').bind 'click', Boat.del
+		$('.itemsWrap.' + status.tab + ' ul li a').bind 'click', __.del
 
 # = Boat END
+__ = Boat
 
 # Utility objects: Ajax, Notify
 Ajax = 
 	post: ( url, data, cb ) ->
-		console.log typeof cb 
 		retData = ''
-		$.ajax(
-			{ url: document.location.origin + '/' + url, type:'post', data: data, async: true}
-			).done ( status ) ->  
-				if typeof cb is 'function' 
-					cb(data, status) 
-		return retData;
+		$.ajax( {url: document.location.origin + '/' + url, type:'post', data: data, async: true}
+		).done ( status ) -> cb(data, status) if typeof cb is 'function' 
+
+		retData;
 
 Notify =
 	timeout: 4000
-	now:null
+	now    : null
 
 	show: (msg, timeout) ->
 		Notify.now = new Date().getTime()

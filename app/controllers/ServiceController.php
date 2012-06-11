@@ -41,8 +41,9 @@
 
 		public function updateStudent() {
 			extract ( $_POST );
-			$has_skipair = ( $has_skipair === 'true' ) ? 1 : 0;
+			//$has_skipair = ( $has_skipair === 'true' ) ? 1 : 0;
 			$sql = "UPDATE student SET last_name ='$last_name', first_name='$first_name', has_skipair=$has_skipair WHERE id=$id_student";
+			LG( $sql);
 			Init::$db->query( $sql );
 		}
 	}

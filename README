@@ -1,11 +1,30 @@
 In mysql:
 
-  Create database 'aruba'
-  Create db user: 'mvc' with password 'mvc'
+  1. Create database 'aruba'
+  2. Create db user 'mvc' with password 'mvc'
+  3. Run /migration script(s) to populate db with test values
 
-  Run /migration script(s) to populate db with test values
+Make sure the following directories are writable by apache:
+	/public/css
+	/public/js
+	/log
 
-  Make sure the following directories are writable by apache:
-  /public/css
-  /public/js
-  /log
+Tail /log/mvc.log to check for installation errors
+
+Apache .conf:
+	<Directory /www/mvc >
+			Options FollowSymLinks
+			AllowOverride All
+			Order deny,allow
+			Deny from None
+	</Directory>
+
+	<VirtualHost *:80>
+			ServerAdmin jarek707@gmail.com
+			DocumentRoot "/www/mvc"
+			ServerName mvc 
+			ServerAlias mvc 
+			SetEnv SERVER_ENV local
+			ErrorLog "/private/var/log/apache2/mvc-error_log"
+			CustomLog "/private/var/log/apache2/mvc-access_log" common
+	</VirtualHost>
